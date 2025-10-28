@@ -1,0 +1,4 @@
+allure-python-commons
+pytest==8.4.2
+selene==2.0.0rc9
+allure-pytest==2.15.0
