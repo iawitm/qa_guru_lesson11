@@ -7,6 +7,10 @@ from selenium.webdriver.chrome.options import Options
 from utils import attach
 from dotenv import load_dotenv
 
+DEFAULT_BROWSER_VERSION = '128.0'
+DEFAULT_BROWSER_NAME = 'chrome'
+
+
 def pytest_addoption(parser):
     parser.addoption(
         '--browser',
@@ -26,7 +30,9 @@ def load_env():
 @pytest.fixture(scope='module')
 def browser_setup(request):
     browser_name = request.config.getoption('--browser')
+    browser_name = browser_name if browser_name != "" else DEFAULT_BROWSER_NAME
     browser_version = request.config.getoption('--browser_version')
+    browser_version = browser_version if browser_version != "" else DEFAULT_BROWSER_VERSION
     browser.config.window_width = 1920
     browser.config.window_height = 1080
     browser.config.base_url = "https://demoqa.com"
