@@ -16,11 +16,11 @@ def pytest_addoption(parser):
         '--browser',
         help='Браузер, в котором будут запущены тесты',
         choices=['firefox', 'chrome'],
-        default='chrome'
+        default=None
     )
     parser.addoption(
         '--browser_version',
-        default='128.0',
+        default=None,
     )
 
 @pytest.fixture(scope='session', autouse=True)
