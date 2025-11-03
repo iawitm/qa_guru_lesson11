@@ -7,14 +7,26 @@ from selenium.webdriver.chrome.options import Options
 from utils import attach
 from dotenv import load_dotenv
 
-DEFAULT_BROWSER_VERSION = "128.0"
+def pytest_addoption(parser):
+    parser.addoption(
+        '--browser',
+        help='Браузер, в котором будут запущены тесты',
+        choices=['firefox', 'chrome'],
+        default='chrome'
+    )
+    parser.addoption(
+        '--browser_version',
+        default='128.0',
+    )
 
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
     load_dotenv()
 
 @pytest.fixture(scope='module')
-def browser_setup():
+def browser_setup(request):
+    browser_name = request.config.getoption('--browser')
+    browser_version = request.config.getoption('--browser_version')
     browser.config.window_width = 1920
     browser.config.window_height = 1080
     browser.config.base_url = "https://demoqa.com"
@@ -22,8 +34,8 @@ def browser_setup():
     password = os.getenv('PASSWORD')
     options = Options()
     selenoid_capabilities = {
-        "browserName": "chrome",
-        "browserVersion": "128.0",
+        "browserName": browser_name,
+        "browserVersion": browser_version,
         "selenoid:options": {
             "enableVNC": True,
             "enableVideo": True
