@@ -1,3 +1,4 @@
+python-dotenv
 selenium
 allure-python-commons
 pytest==8.4.2
